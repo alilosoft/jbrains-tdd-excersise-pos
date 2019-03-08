@@ -4,11 +4,12 @@ import io.kotlintest.shouldBe
 import org.junit.jupiter.api.Test
 
 class SellOneItemWithBarCode{
-    @Test
-    fun `when barcode exist display the price`() {
-        val display = Display()
-        val pos = PointOfSale(display)
 
+    val display = Display()
+    val pos = PointOfSale(display)
+
+    @Test
+    fun `display the correct price for existing barcode`() {
         pos.onBarCode("123456")
         display.lastText shouldBe "$10.99"
 
@@ -17,6 +18,12 @@ class SellOneItemWithBarCode{
 
         pos.onBarCode("123455")
         display.lastText shouldBe "$11.99"
+    }
+
+    @Test
+    fun `display Unknown Barcode for non existing barcode`() {
+        pos.onBarCode("unknown")
+        display.lastText shouldBe "Unknown Barcode"
     }
 }
 
@@ -33,6 +40,6 @@ class PointOfSale(private val display: Display) {
     )
 
     fun onBarCode(barCode: String) {
-        display.lastText = items[barCode] ?: "Unknown"
+        display.lastText = items[barCode] ?: "Unknown Barcode"
     }
 }
