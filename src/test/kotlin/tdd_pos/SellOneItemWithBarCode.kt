@@ -21,9 +21,17 @@ class SellOneItemWithBarCode{
     }
 
     @Test
-    fun `display Unknown Barcode for non existing barcode`() {
+    fun `display 'Unknown Barcode' for non existing barcode`() {
         pos.onBarCode("unknown")
         display.lastText shouldBe "Unknown Barcode"
+    }
+
+    @Test
+    fun `display 'Invalid Barcode' for blank barcode`() {
+        pos.onBarCode("")
+        display.lastText shouldBe "Invalid Barcode"
+        pos.onBarCode("    ")
+        display.lastText shouldBe "Invalid Barcode"
     }
 }
 
@@ -40,6 +48,9 @@ class PointOfSale(private val display: Display) {
     )
 
     fun onBarCode(barCode: String) {
-        display.lastText = items[barCode] ?: "Unknown Barcode"
+        if (barCode.isBlank())
+            display.lastText = "Invalid Barcode"
+        else
+            display.lastText = items[barCode] ?: "Unknown Barcode"
     }
 }
