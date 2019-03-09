@@ -5,11 +5,15 @@ import org.junit.jupiter.api.Test
 
 class SellOneItemWithBarCode{
 
-
     @Test
     fun `when barcode found then display the price`() {
         val display = Display()
-        val pos = SaleController(display)
+        val items = mapOf(
+            "123456" to "$10.99",
+            "123444" to "$5.99",
+            "123455" to "$11.99"
+        )
+        val pos = SaleController(display, items)
 
         pos.onBarCode("123456")
         display.lastText shouldBe "$10.99"
@@ -22,16 +26,16 @@ class SellOneItemWithBarCode{
     @Test
     fun `when barcode not found then display 'not found' message`() {
         val display = Display()
-        val pos = SaleController(display)
-
-        pos.onBarCode("99999")
-        display.lastText shouldBe "Barcode 99999 not found"
+        val pos = SaleController(display, emptyMap())
+        val barCode = "123456"
+        pos.onBarCode(barCode)
+        display.lastText shouldBe "Barcode $barCode not found"
     }
 
     @Test
     fun `when barcode is blank then display error message`() {
         val display = Display()
-        val pos = SaleController(display)
+        val pos = SaleController(display, emptyMap())
 
         pos.onBarCode("")
         display.lastText shouldBe "Invalid Barcode"
@@ -44,13 +48,7 @@ class Display {
     var lastText = "Hello"
 }
 
-class SaleController(private val display: Display) {
-
-    private val items = mapOf(
-        "123456" to "$10.99",
-        "123444" to "$5.99",
-        "123455" to "$11.99"
-    )
+class SaleController(private val display: Display, private val items: Map<String, String>) {
 
     fun onBarCode(barCode: String) {
         if (barCode.isBlank())
