@@ -6,13 +6,16 @@ import org.junit.jupiter.api.Test
 class SellOneItemWithBarCode{
 
     val display = Display()
-    val pos = PointOfSale(display)
+    val pos = SaleController(display)
 
     @Test
-    fun `display the correct price for existing barcode`() {
+    fun `barcode found`() {
         pos.onBarCode("123456")
         display.lastText shouldBe "$10.99"
+    }
 
+    @Test
+    fun `different barcode, different price`() {
         pos.onBarCode("123444")
         display.lastText shouldBe "$5.99"
 
@@ -21,13 +24,13 @@ class SellOneItemWithBarCode{
     }
 
     @Test
-    fun `display 'Unknown Barcode' for non existing barcode`() {
-        pos.onBarCode("unknown")
-        display.lastText shouldBe "Unknown Barcode"
+    fun `barcode not found`() {
+        pos.onBarCode("99999")
+        display.lastText shouldBe "Barcode 99999 not found"
     }
 
     @Test
-    fun `display 'Invalid Barcode' for blank barcode`() {
+    fun `blank barcode`() {
         pos.onBarCode("")
         display.lastText shouldBe "Invalid Barcode"
         pos.onBarCode("    ")
@@ -39,7 +42,7 @@ class Display {
     var lastText = "Hello"
 }
 
-class PointOfSale(private val display: Display) {
+class SaleController(private val display: Display) {
 
     private val items = mapOf(
         "123456" to "$10.99",
@@ -51,6 +54,6 @@ class PointOfSale(private val display: Display) {
         if (barCode.isBlank())
             display.lastText = "Invalid Barcode"
         else
-            display.lastText = items[barCode] ?: "Unknown Barcode"
+            display.lastText = items[barCode] ?: "Barcode $barCode not found"
     }
 }
