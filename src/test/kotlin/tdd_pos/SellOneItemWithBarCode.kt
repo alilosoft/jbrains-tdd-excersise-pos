@@ -5,35 +5,37 @@ import org.junit.jupiter.api.Test
 
 class SellOneItemWithBarCode{
 
-    val display = Display()
-    val pos = SaleController(display)
 
     @Test
-    fun `barcode found`() {
+    fun `when barcode found then display the price`() {
+        val display = Display()
+        val pos = SaleController(display)
+
         pos.onBarCode("123456")
         display.lastText shouldBe "$10.99"
-    }
-
-    @Test
-    fun `different barcode, different price`() {
         pos.onBarCode("123444")
         display.lastText shouldBe "$5.99"
-
         pos.onBarCode("123455")
         display.lastText shouldBe "$11.99"
     }
 
     @Test
-    fun `barcode not found`() {
+    fun `when barcode not found then display 'not found' message`() {
+        val display = Display()
+        val pos = SaleController(display)
+
         pos.onBarCode("99999")
         display.lastText shouldBe "Barcode 99999 not found"
     }
 
     @Test
-    fun `blank barcode`() {
+    fun `when barcode is blank then display error message`() {
+        val display = Display()
+        val pos = SaleController(display)
+
         pos.onBarCode("")
         display.lastText shouldBe "Invalid Barcode"
-        pos.onBarCode("    ")
+        pos.onBarCode("        ")
         display.lastText shouldBe "Invalid Barcode"
     }
 }
