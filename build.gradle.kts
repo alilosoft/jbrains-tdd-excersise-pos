@@ -4,25 +4,32 @@ plugins {
     kotlin("jvm") version "1.3.21"
 }
 
-val junit5Version = "5.4.0"
-val kotlintestVersion = "3.3.1"
+object Version {
+    const val junit5 = "5.4.0"
+    const val spek2 = "2.0.1"
+    const val kotlintest = "3.3.1"
+}
 
-group = "dev.clean-code.training"
+group = "dev.elegantcode.training"
 version = "1.0-SNAPSHOT"
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
 
     // junit5
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$junit5Version")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junit5Version")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${Version.junit5}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${Version.junit5}")
+
+    // include Spek2 test framework
+    testImplementation("org.spekframework.spek2:spek-dsl-jvm:${Version.spek2}")
+    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:${Version.spek2}")
 
     // kotlintest assertions
-    testImplementation("io.kotlintest:kotlintest-assertions:$kotlintestVersion")
+    testImplementation("io.kotlintest:kotlintest-assertions:${Version.kotlintest}")
 }
 
 tasks.withType<KotlinCompile> {
