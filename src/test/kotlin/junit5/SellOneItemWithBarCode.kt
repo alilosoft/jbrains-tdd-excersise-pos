@@ -1,19 +1,22 @@
-package tdd_pos
+package junit5
 
+import domain.Catalogue
+import domain.Display
+import domain.SaleController
 import io.kotlintest.shouldBe
 import org.junit.jupiter.api.Test
 
-class SellOneItemWithBarCode{
+class SellOneItemWithBarCode {
 
     @Test
     fun `when barcode found then display the price`() {
         val display = Display()
-        val items = mapOf(
+        val items = mutableMapOf(
             "123456" to "$10.99",
             "123444" to "$5.99",
             "123455" to "$11.99"
         )
-        val pos = SaleController(display, items)
+        val pos = SaleController(display, Catalogue(items))
 
         pos.onBarCode("123456")
         display.lastText shouldBe "$10.99"
@@ -26,7 +29,7 @@ class SellOneItemWithBarCode{
     @Test
     fun `when barcode not found then display 'not found' message`() {
         val display = Display()
-        val pos = SaleController(display, emptyMap())
+        val pos = SaleController(display, Catalogue(mutableMapOf()))
         val barCode = "123456"
         pos.onBarCode(barCode)
         display.lastText shouldBe "Barcode $barCode not found"
@@ -35,7 +38,7 @@ class SellOneItemWithBarCode{
     @Test
     fun `when barcode is blank then display error message`() {
         val display = Display()
-        val pos = SaleController(display, emptyMap())
+        val pos = SaleController(display, Catalogue(mutableMapOf()))
 
         pos.onBarCode("")
         display.lastText shouldBe "Invalid Barcode"
@@ -44,16 +47,4 @@ class SellOneItemWithBarCode{
     }
 }
 
-class Display {
-    var lastText = "Hello"
-}
 
-class SaleController(private val display: Display, private val items: Map<String, String>) {
-
-    fun onBarCode(barCode: String) {
-        if (barCode.isBlank())
-            display.lastText = "Invalid Barcode"
-        else
-            display.lastText = items[barCode] ?: "Barcode $barCode not found"
-    }
-}
