@@ -10,7 +10,7 @@ object Version {
     const val kotlintest = "3.3.1"
 }
 
-group = "dev.elegantcode.training"
+group = "dev.elegantcode.learning"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -36,4 +36,6 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-
+tasks.test {
+    useJUnitPlatform()
+}
