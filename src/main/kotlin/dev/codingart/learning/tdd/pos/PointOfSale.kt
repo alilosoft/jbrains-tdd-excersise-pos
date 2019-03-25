@@ -4,20 +4,18 @@ class Display {
     var lastText = "Hello"
 }
 
-class SaleController(private val display: Display,
-                     private val priceByBarcode: MutableMap<String, String>) {
+class SaleController(private val display: Display, private val priceByBarcode: MutableMap<String, String>) {
 
     fun onBarCode(barCode: String) {
-        if (barCode.isBlank())
+        if (barCode.isBlank()) {
             display.lastText = "Invalid Barcode"
-        else {
-            val price = priceByBarcode[barCode]
-            if (price != null) {
-                display.lastText = price
-            } else {
-                display.lastText = "Barcode $barCode not found"
-            }
+            return
         }
-
+        val price = priceByBarcode[barCode]
+        if (price != null) {
+            display.lastText = price
+        } else {
+            display.lastText = "Barcode $barCode not found"
+        }
     }
 }
