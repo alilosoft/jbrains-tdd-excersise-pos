@@ -8,14 +8,26 @@ class SaleController(private val display: Display, private val priceByBarcode: M
 
     fun onBarCode(barCode: String) {
         if (barCode.isBlank()) {
-            display.lastText = "Invalid Barcode"
+            showInvalidBarcodeMessage()
             return
         }
-        val price = priceByBarcode[barCode]
-        if (price != null) {
-            display.lastText = price
+
+        if (priceByBarcode.containsKey(barCode)) {
+            showProductPrice(barCode)
         } else {
-            display.lastText = "Barcode $barCode not found"
+            showBarcodeNotFoundMessage(barCode)
         }
+    }
+
+    private fun showProductPrice(barCode: String) {
+        display.lastText = priceByBarcode.getValue(barCode)
+    }
+
+    private fun showBarcodeNotFoundMessage(barCode: String) {
+        display.lastText = "Barcode $barCode not found"
+    }
+
+    private fun showInvalidBarcodeMessage() {
+        display.lastText = "Invalid Barcode"
     }
 }
