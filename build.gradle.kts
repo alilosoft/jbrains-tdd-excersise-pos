@@ -23,6 +23,7 @@ dependencies {
     // junit5
     testImplementation("org.junit.jupiter:junit-jupiter-api:${Version.junit5}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${Version.junit5}")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:${Version.junit5}")
 
     // include Spek2 test framework
     testImplementation("org.spekframework.spek2:spek-dsl-jvm:${Version.spek2}")
