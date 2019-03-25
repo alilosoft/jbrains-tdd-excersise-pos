@@ -10,7 +10,7 @@ object Version {
     const val kotlintest = "3.3.1"
 }
 
-group = "dev.elegantcode.learning"
+group = "dev.codingart.learning"
 version = "1.0-SNAPSHOT"
 
 repositories {
