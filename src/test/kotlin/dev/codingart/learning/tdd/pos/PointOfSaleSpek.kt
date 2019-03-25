@@ -1,7 +1,5 @@
-package spek
+package dev.codingart.learning.tdd.pos
 
-import dev.codingart.learning.tdd.pos.Display
-import dev.codingart.learning.tdd.pos.SaleController
 import io.kotlintest.matchers.maps.shouldNotContainKey
 import io.kotlintest.matchers.string.shouldBeBlank
 import io.kotlintest.shouldBe
@@ -9,7 +7,6 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
 class PointOfSaleSpek : Spek({
-
     Feature("sell one item with barcode") {
         Scenario("barcode is found") {
 
@@ -49,7 +46,7 @@ class PointOfSaleSpek : Spek({
             }
         }
 
-        Scenario("empty/blank barcode") {
+        Scenario("invalid barcode") {
 
             val priceByBarcode= mutableMapOf<String, String>()
             val display = Display()
