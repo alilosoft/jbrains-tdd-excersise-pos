@@ -12,7 +12,7 @@ class PointOfSaleSpek : Spek({
 
             val priceByBarcode= mutableMapOf<String, String>()
             val display = Display()
-            val saleController = SaleController(display, priceByBarcode)
+            val saleController = SaleController(display, Catalogue(priceByBarcode))
 
             Given("a barcode exist with a price") {
                 priceByBarcode["123456"] = "$10.50"
@@ -23,7 +23,7 @@ class PointOfSaleSpek : Spek({
             }
 
             Then("the display should show the correct price") {
-                display.lastText shouldBe "$10.50"
+                display.message shouldBe "$10.50"
             }
         }
 
@@ -31,7 +31,7 @@ class PointOfSaleSpek : Spek({
 
             val priceByBarcode= mutableMapOf<String, String>()
             val display = Display()
-            val saleController = SaleController(display, priceByBarcode)
+            val saleController = SaleController(display, Catalogue(priceByBarcode))
             val barCode = "123456"
             Given("the barcode doesn't exist") {
                 priceByBarcode.shouldNotContainKey(barCode)
@@ -42,7 +42,7 @@ class PointOfSaleSpek : Spek({
             }
 
             Then("the display shows 'barcode not found' message") {
-                display.lastText shouldBe "Barcode $barCode not found"
+                display.message shouldBe "Barcode $barCode not found"
             }
         }
 
@@ -50,7 +50,7 @@ class PointOfSaleSpek : Spek({
 
             val priceByBarcode= mutableMapOf<String, String>()
             val display = Display()
-            val saleController = SaleController(display, priceByBarcode)
+            val saleController = SaleController(display, Catalogue(priceByBarcode))
 
             listOf("", "  ", " \n ", " \r ", " \t ").forEach {
 
@@ -63,7 +63,7 @@ class PointOfSaleSpek : Spek({
                 }
 
                 Then("the display shows 'invalid barcode' message") {
-                    display.lastText shouldBe "Invalid Barcode"
+                    display.message shouldBe "Invalid Barcode"
                 }
 
             }

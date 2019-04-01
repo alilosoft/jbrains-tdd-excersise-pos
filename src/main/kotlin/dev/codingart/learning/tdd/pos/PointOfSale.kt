@@ -1,22 +1,31 @@
 package dev.codingart.learning.tdd.pos
 
 class Display {
-    var lastText = "Hello"
+    var message = "Hello"
 
     fun showPrice(price: String) {
-        lastText = price
+        message = price
     }
 
     fun showBarcodeNotFoundMessage(barCode: String) {
-        lastText = "Barcode $barCode not found"
+        message = "Barcode $barCode not found"
     }
 
     fun showInvalidBarcodeMessage() {
-        lastText = "Invalid Barcode"
+        message = "Invalid Barcode"
     }
 }
 
-class SaleController(private val display: Display, private val priceByBarcode: MutableMap<String, String>) {
+class Catalogue(private val priceByBarcode: MutableMap<String, String>) {
+    fun findPrice(barCode: String): String? {
+        return priceByBarcode[barCode]
+    }
+}
+
+class SaleController(
+    private val display: Display,
+    private val catalogue: Catalogue
+) {
 
     fun onBarCode(barCode: String) {
         if (barCode.isBlank()) {
@@ -24,15 +33,13 @@ class SaleController(private val display: Display, private val priceByBarcode: M
             return
         }
 
-        if (priceByBarcode.containsKey(barCode)) {
-            display.showPrice(findPrice(barCode))
+        val price = catalogue.findPrice(barCode)
+        if (price != null) {
+            display.showPrice(price)
         } else {
             display.showBarcodeNotFoundMessage(barCode)
         }
     }
 
-    private fun findPrice(barCode: String): String {
-        return priceByBarcode.getValue(barCode)
-    }
 
 }

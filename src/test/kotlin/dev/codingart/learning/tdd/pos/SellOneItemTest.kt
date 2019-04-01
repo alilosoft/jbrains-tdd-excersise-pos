@@ -8,6 +8,8 @@ import org.junit.jupiter.params.provider.ValueSource
 
 class SellOneItemTest {
 
+    private fun emptyCatalogue() = Catalogue(mutableMapOf())
+
     @ParameterizedTest(name = "barcode={0} -> price={1}")
     @CsvSource("123456, $9.99", "123444, $4.99", "123455, $1.99")
     fun `when barcode found then display the price`(barCode: String, price: String) {
@@ -17,28 +19,31 @@ class SellOneItemTest {
             "123444" to "$4.99",
             "123455" to "$1.99"
         )
-        val pos = SaleController(display, priceByBarcode)
+        val catalogue = Catalogue(priceByBarcode)
+        val pos = SaleController(display, catalogue)
         pos.onBarCode(barCode)
-        display.lastText shouldBe price
+        display.message shouldBe price
     }
 
     @Test
     fun `when barcode not found then display 'not found' message`() {
         val display = Display()
-        val pos = SaleController(display, mutableMapOf())
+        val pos = SaleController(display, emptyCatalogue())
         val barCode = "123456"
         pos.onBarCode(barCode)
-        display.lastText shouldBe "Barcode $barCode not found"
+        display.message shouldBe "Barcode $barCode not found"
     }
+
+
 
     @ParameterizedTest
     @ValueSource(strings = [" ", "  ", " \n ", " \t "])
     fun `when barcode is blank then display error message`(barCode: String) {
         val display = Display()
-        val pos = SaleController(display, mutableMapOf())
+        val pos = SaleController(display, emptyCatalogue())
 
         pos.onBarCode(barCode)
-        display.lastText shouldBe "Invalid Barcode"
+        display.message shouldBe "Invalid Barcode"
     }
 }
 
