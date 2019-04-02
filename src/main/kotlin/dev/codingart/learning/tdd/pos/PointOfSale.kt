@@ -3,6 +3,7 @@ package dev.codingart.learning.tdd.pos
 class Display {
     var message = "Hello"
 
+    // SMELL (primitive obsession): representing the price with string?!!!
     fun showPrice(price: String) {
         message = price
     }
@@ -17,9 +18,8 @@ class Display {
 }
 
 class Catalogue(private val priceByBarcode: MutableMap<String, String>) {
-    fun findPrice(barCode: String): String? {
-        return priceByBarcode[barCode]
-    }
+    // SMELL (primitive obsession): return the price as String
+    fun findPrice(barCode: String) = priceByBarcode[barCode] //?: throw IllegalArgumentException("Barcode not found")
 }
 
 class SaleController(
@@ -28,6 +28,8 @@ class SaleController(
 ) {
 
     fun onBarCode(barCode: String) {
+        // SMELL: A path that doesn't need a collaborator,
+        // maybe this logic (barcode validation doesn't belong here)
         if (barCode.isBlank()) {
             display.showInvalidBarcodeMessage()
             return
