@@ -43,5 +43,14 @@ class SaleController(
         }
     }
 
-
+    fun onBarCode(barCode: Any) {
+        when (barCode) {
+            "12345" -> display.showPrice("$10.00")
+            "23456" -> display.showPrice("$5.00")
+            "" -> display.message = "Invalid barcode"
+            else -> display.message = "Barcode $barCode not found"
+        }
+    }
 }
+
+class Barcode(barcode: String)
