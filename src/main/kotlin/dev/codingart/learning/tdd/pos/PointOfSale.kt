@@ -28,7 +28,7 @@ class SaleController(
 ) {
 
     fun onBarCode(barCode: String) {
-        // SMELL: A path that doesn't need a collaborator,
+        // SMELL: A path that doesn't need a collaborator (catalogue),
         // maybe this logic (barcode validation doesn't belong here)
         if (barCode.isBlank()) {
             display.showInvalidBarcodeMessage()
