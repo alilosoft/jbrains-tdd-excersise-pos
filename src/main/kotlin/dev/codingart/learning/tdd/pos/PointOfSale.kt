@@ -17,7 +17,7 @@ class Display {
     }
 }
 
-class Catalog(private val priceByBarcode: MutableMap<String, String>) {
+class Catalog(private val priceByBarcode: MutableMap<String, String> = mutableMapOf()) {
     // SMELL (primitive obsession): return the price as String
     fun findPrice(barCode: String) = priceByBarcode[barCode] //?: throw IllegalArgumentException("Barcode not found")
 }

@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource
 class SellOneItemTest {
 
     private val display = Display()
-    private val emptyCatalogue by lazy { Catalog(mutableMapOf()) }
+    private val emptyCatalogue = Catalog()
     private val catalogue by lazy {
         Catalog(
             mutableMapOf(

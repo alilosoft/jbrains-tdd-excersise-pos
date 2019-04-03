@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 class BarcodeOfTypeAny {
     private val display = Display()
-    private val catalog = Catalog(mutableMapOf())
+    private val catalog = Catalog()
     private val register = SaleController(display, catalog)
 
     @Test
