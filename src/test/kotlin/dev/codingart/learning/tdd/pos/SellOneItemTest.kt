@@ -9,9 +9,9 @@ import org.junit.jupiter.params.provider.ValueSource
 class SellOneItemTest {
 
     private val display = Display()
-    private val emptyCatalogue by lazy { Catalogue(mutableMapOf()) }
+    private val emptyCatalogue by lazy { Catalog(mutableMapOf()) }
     private val catalogue by lazy {
-        Catalogue(
+        Catalog(
             mutableMapOf(
                 "123456" to "$9.99",
                 "123444" to "$4.99",

@@ -17,25 +17,25 @@ class Display {
     }
 }
 
-class Catalogue(private val priceByBarcode: MutableMap<String, String>) {
+class Catalog(private val priceByBarcode: MutableMap<String, String>) {
     // SMELL (primitive obsession): return the price as String
     fun findPrice(barCode: String) = priceByBarcode[barCode] //?: throw IllegalArgumentException("Barcode not found")
 }
 
 class SaleController(
     private val display: Display,
-    private val catalogue: Catalogue
+    private val catalog: Catalog
 ) {
 
     fun onBarCode(barCode: String) {
-        // SMELL: A path that doesn't need a collaborator (catalogue),
+        // SMELL: A path that doesn't need a collaborator (catalog),
         // maybe this logic (barcode validation doesn't belong here)
         if (barCode.isBlank()) {
             display.showInvalidBarcodeMessage()
             return
         }
 
-        val price = catalogue.findPrice(barCode)
+        val price = catalog.findPrice(barCode)
         if (price != null) {
             display.showPrice(price)
         } else {
