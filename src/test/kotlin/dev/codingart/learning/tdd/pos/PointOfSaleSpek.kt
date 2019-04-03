@@ -12,7 +12,7 @@ class PointOfSaleSpek : Spek({
 
             val priceByBarcode= mutableMapOf<String, String>()
             val display = Display()
-            val saleController = SaleController(display, Catalog(priceByBarcode))
+            val saleController = Register(display, Catalog(priceByBarcode))
 
             Given("a barcode exist with a price") {
                 priceByBarcode["123456"] = "$10.50"
@@ -31,7 +31,7 @@ class PointOfSaleSpek : Spek({
 
             val priceByBarcode= mutableMapOf<String, String>()
             val display = Display()
-            val saleController = SaleController(display, Catalog(priceByBarcode))
+            val saleController = Register(display, Catalog(priceByBarcode))
             val barCode = "123456"
             Given("the barcode doesn't exist") {
                 priceByBarcode.shouldNotContainKey(barCode)
@@ -50,7 +50,7 @@ class PointOfSaleSpek : Spek({
 
             val priceByBarcode= mutableMapOf<String, String>()
             val display = Display()
-            val saleController = SaleController(display, Catalog(priceByBarcode))
+            val saleController = Register(display, Catalog(priceByBarcode))
 
             listOf("", "  ", " \n ", " \r ", " \t ").forEach {
 

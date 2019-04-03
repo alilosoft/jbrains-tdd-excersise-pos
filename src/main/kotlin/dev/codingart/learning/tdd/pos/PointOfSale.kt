@@ -22,7 +22,7 @@ class Catalog(private val priceByBarcode: MutableMap<String, String> = mutableMa
     fun findPrice(barCode: String) = priceByBarcode[barCode] //?: throw IllegalArgumentException("Barcode not found")
 }
 
-class SaleController(
+class Register(
     private val display: Display,
     private val catalog: Catalog
 ) {

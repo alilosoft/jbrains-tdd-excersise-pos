@@ -19,7 +19,7 @@ class SellOneItemTest {
             )
         )
     }
-    private val saleController = SaleController(display, catalogue)
+    private val saleController = Register(display, catalogue)
 
     @ParameterizedTest(name = "barcode={0} -> price={1}")
     @CsvSource("123456, $9.99", "123444, $4.99", "123455, $1.99")
@@ -39,7 +39,7 @@ class SellOneItemTest {
     @ParameterizedTest
     @ValueSource(strings = [" ", " \n ", " \t "])
     fun `when barcode is blank then display error message`(barCode: String) {
-        val pos = SaleController(display, emptyCatalogue)
+        val pos = Register(display, emptyCatalogue)
         pos.onBarCode(barCode)
         display.message shouldBe "Invalid Barcode"
     }

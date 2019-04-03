@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class BarcodeOfTypeAny {
     private val display = Display()
     private val catalog = Catalog()
-    private val register = SaleController(display, catalog)
+    private val register = Register(display, catalog)
 
     @Test
     fun `product found`() {
