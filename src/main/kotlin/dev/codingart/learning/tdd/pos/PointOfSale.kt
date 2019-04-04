@@ -68,4 +68,8 @@ class Register(
     }
 }
 
-data class Barcode(val barcode: String)
+data class Barcode(val barcode: String) {
+    init {
+        if (barcode.isBlank()) throw IllegalArgumentException("Barcode cannot be blank")
+    }
+}
