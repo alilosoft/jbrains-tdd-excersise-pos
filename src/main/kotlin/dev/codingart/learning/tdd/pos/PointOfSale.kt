@@ -55,8 +55,10 @@ class Register(
             display.showBarcodeNotFoundMessage(barCode)
     }
 
-    fun onBarCode(barCode: Barcode){
-        display.showPrice("$10.00")
+    fun onBarCode(barCode: Barcode) {
+        val price = catalog.findPrice(barCode)
+        if (price != null)
+            display.showPrice(price)
     }
 }
 
