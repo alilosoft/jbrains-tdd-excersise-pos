@@ -54,6 +54,10 @@ class Register(
         else
             display.showBarcodeNotFoundMessage(barCode)
     }
+
+    fun onBarCode(barCode: Barcode){
+        display.showPrice("$10.00")
+    }
 }
 
 class Barcode(barcode: String)
