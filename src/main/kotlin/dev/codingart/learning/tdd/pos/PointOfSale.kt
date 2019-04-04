@@ -8,7 +8,7 @@ class Display {
         message = price
     }
 
-    fun showBarcodeNotFoundMessage(barCode: String) {
+    fun showBarcodeNotFoundMessage(barCode: Any) {
         message = "Barcode $barCode not found"
     }
 
@@ -17,9 +17,13 @@ class Display {
     }
 }
 
-class Catalog(private val priceByBarcode: MutableMap<String, String> = mutableMapOf()) {
+class Catalog(private val priceByBarcode: MutableMap<Any, String> = mutableMapOf()) {
     // SMELL (primitive obsession): return the price as String
-    fun findPrice(barCode: String) = priceByBarcode[barCode] //?: throw IllegalArgumentException("Barcode not found")
+    fun findPrice(barCode: Any) = priceByBarcode[barCode] //?: throw IllegalArgumentException("Barcode not found")
+
+    fun addProduct(barCode: Any, price: String) {
+        priceByBarcode[barCode] = price
+    }
 }
 
 class Register(
@@ -44,12 +48,11 @@ class Register(
     }
 
     fun onBarCode(barCode: Any) {
-        when (barCode) {
-            "12345" -> display.showPrice("$10.00")
-            "23456" -> display.showPrice("$5.00")
-            "" -> display.message = "Invalid barcode"
-            else -> display.message = "Barcode $barCode not found"
-        }
+        val price = catalog.findPrice(barCode)
+        if (price != null)
+            display.showPrice(price)
+        else
+            display.showBarcodeNotFoundMessage(barCode)
     }
 }
 
