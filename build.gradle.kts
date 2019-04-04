@@ -25,10 +25,6 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${Version.junit5}")
     testImplementation("org.junit.jupiter:junit-jupiter-params:${Version.junit5}")
 
-    // include Spek2 test framework
-    testImplementation("org.spekframework.spek2:spek-dsl-jvm:${Version.spek2}")
-    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:${Version.spek2}")
-
     // kotlintest assertions
     testImplementation("io.kotlintest:kotlintest-assertions:${Version.kotlintest}")
 }
