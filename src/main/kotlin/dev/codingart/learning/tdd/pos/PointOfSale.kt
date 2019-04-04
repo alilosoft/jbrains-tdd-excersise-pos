@@ -12,6 +12,10 @@ class Display {
         message = "Barcode $barCode not found"
     }
 
+    fun showBarcodeNotFoundMessage(barCode: Barcode) {
+        message = "Barcode ${barCode.barcode} not found"
+    }
+
     fun showInvalidBarcodeMessage() {
         message = "Invalid Barcode"
     }
@@ -59,7 +63,9 @@ class Register(
         val price = catalog.findPrice(barCode)
         if (price != null)
             display.showPrice(price)
+        else
+            display.showBarcodeNotFoundMessage(barCode)
     }
 }
 
-class Barcode(barcode: String)
+data class Barcode(val barcode: String)

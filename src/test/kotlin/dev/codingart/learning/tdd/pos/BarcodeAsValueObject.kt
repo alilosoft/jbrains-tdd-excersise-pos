@@ -23,4 +23,11 @@ class BarcodeAsValueObject {
         register.onBarCode(barcode)
         display.message shouldBe "$5.00"
     }
+
+    @Test
+    fun `product not found`() {
+        val barcode = Barcode("00000")
+        register.onBarCode(barcode)
+        display.message shouldBe "Barcode 00000 not found"
+    }
 }
