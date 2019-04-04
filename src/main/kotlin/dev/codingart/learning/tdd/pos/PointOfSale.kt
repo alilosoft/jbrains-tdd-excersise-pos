@@ -51,14 +51,6 @@ class Register(
         }
     }
 
-    fun onBarCode(barCode: Any) {
-        val price = catalog.findPrice(barCode)
-        if (price != null)
-            display.showPrice(price)
-        else
-            display.showBarcodeNotFoundMessage(barCode)
-    }
-
     fun onBarCode(barCode: Barcode) {
         val price = catalog.findPrice(barCode)
         if (price != null)
